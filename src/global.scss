@@ -24,3 +24,26 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.dialer {
+	.modal-wrapper {
+		top: 35%;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		position: fixed;
+		display: block;
+		border-radius: 2px;
+		height: 65%;
+	}
+	.modal-shadow {
+		top: 35%;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		position: fixed;
+		display: block;
+		border-radius: 2px;
+		height: 65%;
+	}
+}

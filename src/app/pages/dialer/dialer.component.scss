@@ -1,0 +1,20 @@
+ion-col {
+    justify-content: center;
+    display: flex;
+    height: 10vh;
+}
+#callbutt{
+    width: 25vh;
+}
+ion-fab-button {
+    --border-radius: 15vh;
+    width: 14vh;
+    height: 9vh;
+    font-size: 32px;
+}
+ion-card{
+    height: 9vh;
+}
+.phone-number{
+    font-size: 40px;
+}

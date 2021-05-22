@@ -1,0 +1,32 @@
+<ion-content scroll-y="false">
+  <ion-card>
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="10">
+          <ion-text class="phone-number">
+            {{phoneNumber}}
+          </ion-text>
+        </ion-col>
+        <ion-col size="1">
+          <ion-button fill="clear" (click)=clearDigit()>
+            <ion-icon slot="icon-only" name="backspace"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  <ion-grid class="keypad">
+    <ion-row *ngFor="let row of digits">
+      <ion-col *ngFor="let col of row" class="dialBtn">
+        <ion-fab-button (click)="dialIn(col)">{{col}}</ion-fab-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-fab-button id="callbutt" color="success" (click)="call()">
+          <ion-icon name="call"></ion-icon>
+        </ion-fab-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

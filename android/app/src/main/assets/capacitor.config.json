@@ -1,0 +1,19 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "dialer",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+	"plugins": {
+		"SplashScreen": {
+			"launchAutoHide": false,
+			"backgroundColor": "#ffffffff",
+			"androidSplashResourceName": "splash",
+			"androidScaleType": "CENTER_CROP",
+			"androidSpinnerStyle": "large",
+			"iosSpinnerStyle": "small",
+			"showSpinner": false,
+			"splashFullScreen": true,
+			"splashImmersive": true
+		}
+	}
+}
