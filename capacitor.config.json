@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "dialer",
+	"appId": "com.shubhamauto.dialer",
+	"appName": "Phone",
 	"webDir": "www",
 	"bundledWebRuntime": false,
 	"plugins": {
