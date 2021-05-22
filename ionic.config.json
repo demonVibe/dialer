@@ -1,0 +1,7 @@
+{
+  "name": "dialer",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
