@@ -1,6 +1,6 @@
 {
 	"appId": "com.shubhamauto.dialer",
-	"appName": "Phone",
+	"appName": "dialer",
 	"webDir": "www",
 	"bundledWebRuntime": false,
 	"plugins": {
@@ -9,9 +9,6 @@
 			"backgroundColor": "#ffffffff",
 			"androidSplashResourceName": "splash",
 			"androidScaleType": "CENTER_CROP",
-			"androidSpinnerStyle": "large",
-			"iosSpinnerStyle": "small",
-			"showSpinner": false,
 			"splashFullScreen": true,
 			"splashImmersive": true
 		}
