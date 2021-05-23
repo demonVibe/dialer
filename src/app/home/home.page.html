@@ -45,7 +45,7 @@
           </ion-text>
         </ion-button>
         <ion-button disabled size="small" fill="clear" style="float: right;" (click)="sendText(cLog)"
-          *ngIf="cLog.type=='3'&&!cLog.messageSent;">
+          *ngIf="cLog.type==3 && !cLog.messageSent;">
           <ion-icon slot="icon-only" name="send-outline"></ion-icon>
         </ion-button>
       </ion-card-content>
