@@ -5,5 +5,14 @@ export interface Logs {
     duration: number
     name: string
     messageSent: boolean
-    photo?: string
+    photo?: string,
+    new?: number,
+    cachedName: string,
+    cachedNumberType?: number,
+    cachedNumberLabel?: string,
+    phoneAccountId?: string,
+    viaNumber?: string,
+    contact?: string,
+    thumbPhoto?: string
+    history?:any
 }

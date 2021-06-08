@@ -9,6 +9,8 @@ import { Logs } from '../interfaces/logs';
 export class StorageService {
   private _storage: Storage | null = null;
   private key: string = 'smsLogs';
+  private lastFetchedKey: string = 'lastFetched';
+  private rawLogsKey: string = 'cachedLogs';
 
   constructor(private storage: Storage) {
     this.init();
@@ -38,5 +40,23 @@ export class StorageService {
 
   public async getSmsLogs() {
     return await this._storage?.get(this.key);
+  }
+
+  public setLastFetched(value?: string) {
+    console.info('pushing value', value)
+    this._storage?.set(this.lastFetchedKey, value);
+  }
+
+  public async getLastFetched() {
+    return await this._storage?.get(this.lastFetchedKey);
+  }
+
+  public setRawLogs(value?: Logs[]) {
+    console.info('pushing value', value)
+    this._storage?.set(this.rawLogsKey, value);
+  }
+
+  public async getRawLogs() {
+    return await this._storage?.get(this.rawLogsKey);
   }
 }

@@ -10,6 +10,7 @@ import { Logs } from '../interfaces/logs';
 
 export class LogsService {
 
+  lastFetched: string;
   data: Logs[];
 
   constructor(
@@ -28,20 +29,34 @@ export class LogsService {
   }
 
   public async getCallLogs(fetchedLogs?: Logs[]) {
-    var fLogs = [];
-    _.forEach(_.groupBy(fetchedLogs, 'number'), (value, key) => {
-      // if (value[0].type == 3) {
-      fLogs.push(value[0])
-      // }
-    })
-    return this.storage.getSmsLogs().then((smsLog) => {
-      console.log('smsLog', JSON.stringify(smsLog));
-      fLogs.forEach((log, index) => {
-        fLogs[index].messageSent = typeof (_.find(smsLog, ["number", log.number])) != "undefined"
+    console.log('got logs', JSON.stringify(fetchedLogs));
+    if (fetchedLogs.length) {
+      this.lastFetched = fetchedLogs[0].date.toString()
+      this.storage.setLastFetched(this.lastFetched);
+    }
+    return this.storage.getRawLogs().then(cachedLogs => {
+      if (cachedLogs) {
+        console.log('cachedLogs', cachedLogs)
+        fetchedLogs = _.concat(fetchedLogs, cachedLogs)
+      }
+      this.storage.setRawLogs(_.take(fetchedLogs, 100))
+      cachedLogs = [];
+      _.forEach(_.groupBy(fetchedLogs, 'number'), (value, key) => {
+        // console.log('inside loop', value);
+        value[0].history = _.without(value, value[0]);
+        cachedLogs.push(value[0])
       })
-      console.log('fLogs', JSON.stringify(fLogs));
-      return _.orderBy(fLogs, ['date'], ['desc']);
+      return _.orderBy(cachedLogs, ['date'], ['desc']);
     })
+
+
+    // return this.storage.getSmsLogs().then((smsLog) => {
+    //   // console.log('smsLog', JSON.stringify(smsLog));
+    //   fLogs.forEach((log, index) => {
+    //     fLogs[index].messageSent = typeof (_.find(smsLog, ["number", log.number])) != "undefined"
+    //   })
+    //   // console.log('fLogs', JSON.stringify(fLogs));
+    // })
   }
 
   public sendText(logData: Logs) {
