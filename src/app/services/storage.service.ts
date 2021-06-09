@@ -56,7 +56,7 @@ export class StorageService {
     this._storage?.set(this.rawLogsKey, value);
   }
 
-  public async getRawLogs() {
+  public async getRawLogs(): Promise<Logs[]> {
     return await this._storage?.get(this.rawLogsKey);
   }
 }

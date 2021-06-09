@@ -35,16 +35,13 @@ export class HomePage {
     //   { "date": new Date(1621002290943), "number": "9505251212", "type": 2, "duration": 37, "name": "", "photo": "", "messageSent": false }
     // ]
 
-
     this.broadcaster.addEventListener('android.intent.action.PHONE_STATE', true).subscribe((event) => {
       console.log('Event Run', event)
       if (event.incoming_number && event.state == "IDLE") {
         setTimeout(() => {
-          this.fetchMissed();
+          this.getLogs();
         }, 2000)
       }
-      else if (event.state == "IDLE")
-        this.getLogs();
     });
     this.storage.getLastFetched()
       .then(lastFetched => {
@@ -52,26 +49,6 @@ export class HomePage {
         this.requestPermission();
       })
       .catch(err => console.error('Unable to get lastFetched'))
-  }
-
-  private fetchMissed() {
-    let missedFilter: CallLogObject[] = [{
-      "name": "type",
-      "value": '3',
-      "operator": ">="
-    }, {
-      "name": "date",
-      "value": JSON.stringify(Date.now() - 86400000),
-      "operator": ">="
-    }];
-    this.callLog.getCallLog(missedFilter)
-      .then((res) => {
-        console.log('Result Missed', res);
-        this.logs.data = res;
-        this.logs.processLogs();
-        this.getLogs();
-      })
-      .catch((err) => console.error("Can't get Log"))
   }
 
   private requestPermission() {
@@ -106,14 +83,16 @@ export class HomePage {
     console.log('fetching from', this.logs.lastFetched)
     this.callLog.getCallLog(logFilters)
       .then((fetchedLogs) => {
-        this.logs.getCallLogs(fetchedLogs).then((processedLog) => {
-          console.log('logs now', processedLog);
-          this.unFilteredLogs = processedLog;
-          this.filteredLogs = processedLog;
-          this.cd.detectChanges();
-        })
+        this.logs.getCallLogs(fetchedLogs)
+          .then((processedLog) => {
+            console.log('logs now', processedLog);
+            this.unFilteredLogs = processedLog;
+            this.filteredLogs = processedLog;
+            this.cd.detectChanges();
+          })
+          .catch((err) => console.error("Can't get Logs"))
       })
-      .catch((err) => console.error("Can't get Log"))
+      .catch((err) => console.error("Can't get phone Log"))
   }
 
   sendText(log: Logs) {
