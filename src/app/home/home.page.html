@@ -44,10 +44,25 @@
             &nbsp;- {{cLog?.date|date:'shortTime'}}
           </ion-text>
         </ion-button>
-        <ion-button disabled size="small" fill="clear" style="float: right;" (click)="sendText(cLog)"
+        <!-- <ion-button disabled size="small" fill="clear" style="float: right;" (click)="sendText(cLog)"
           *ngIf="cLog.type==3 && !cLog.messageSent;">
           <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+        </ion-button> -->
+        <ion-button size="small" fill="clear" style="float: right;" (click)="cLog.expanded=!cLog.expanded">
+          <ion-text>History ({{cLog?.history.length}})</ion-text>
         </ion-button>
+        <app-expandable [expanded]="cLog?.expanded">
+          <div *ngFor="let l of cLog.history">
+              <ion-text *ngIf="l.type==1">Incoming</ion-text>
+              <ion-text *ngIf="l.type==2">Outgoing</ion-text>
+              <ion-text *ngIf="l.type==3" color="danger">Missed</ion-text>
+              <ion-text *ngIf="l.type==5">Rejected</ion-text>
+              <ion-text>
+                &nbsp;- {{l?.date|date:'EEEE, MMMM d, h:mm:ss a'}}
+              </ion-text>
+              <ion-label style="float: right;">{{l.duration}} s</ion-label>
+          </div>
+        </app-expandable>
       </ion-card-content>
     </ion-card>
   </ion-list>

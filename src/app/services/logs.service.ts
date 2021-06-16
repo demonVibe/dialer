@@ -36,10 +36,11 @@ export class LogsService {
         }
         this.storage.setRawLogs(_.take(fetchedLogs, 100))
         cachedLogs = [];
-        _.forEach(_.groupBy(fetchedLogs, 'number'), (value) => {
-          // console.log('inside loop', value);
-          value[0].history = _.without(value, value[0]);
-          cachedLogs.push(value[0])
+        _.forEach(_.groupBy(fetchedLogs, 'number'), (log) => {
+          // console.log('inside loop', JSON.stringify(log));
+          log.forEach(value => value.history = [])
+          log[0].history = _.without(log, log[0]);
+          cachedLogs.push(log[0])
         })
         return _.orderBy(cachedLogs, ['date'], ['desc']);
       })

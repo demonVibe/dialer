@@ -28,12 +28,6 @@ export class HomePage {
     private phoneService: PhoneService,
     private storage: StorageService
   ) {
-    // this.unFilteredLogs = [
-    //   { "date": new Date(1621002230943), "number": "6505551212", "type": 3, "duration": 0, "name": "", "photo": "", "messageSent": true },
-    //   { "date": new Date(1221002238943), "number": "5505551222", "type": 1, "duration": 90, "name": "", "photo": "", "messageSent": false },
-    //   { "date": new Date(1521002260943), "number": "8505541212", "type": 3, "duration": 0, "name": "", "photo": "", "messageSent": false },
-    //   { "date": new Date(1621002290943), "number": "9505251212", "type": 2, "duration": 37, "name": "", "photo": "", "messageSent": false }
-    // ]
 
     this.broadcaster.addEventListener('android.intent.action.PHONE_STATE', true).subscribe((event) => {
       console.log('Event Run', event)
@@ -85,7 +79,7 @@ export class HomePage {
       .then((fetchedLogs) => {
         this.logs.getCallLogs(fetchedLogs)
           .then((processedLog) => {
-            console.log('logs now', processedLog);
+            console.log('logs now', JSON.stringify(processedLog));
             this.unFilteredLogs = processedLog;
             this.filteredLogs = processedLog;
             this.cd.detectChanges();
