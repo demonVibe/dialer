@@ -4,14 +4,14 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "io.ionic.starter",
+  "applicationId": "com.shubhamauto.dialer",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "versionCode": 1,
-      "versionName": "1.0",
+      "versionName": "2.0",
       "outputFile": "app-release.apk"
     }
   ]

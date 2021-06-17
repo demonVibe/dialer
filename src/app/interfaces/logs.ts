@@ -4,10 +4,10 @@ export interface Logs {
     date: Date
     duration: number
     name: string
-    messageSent: boolean
+    messageSent?: boolean
     photo?: string
     new?: number
-    cachedName: string
+    cachedName?: string
     cachedNumberType?: number
     cachedNumberLabel?: string
     phoneAccountId?: string
