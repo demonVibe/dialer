@@ -15,11 +15,13 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
 import { DialerComponent } from './pages/dialer/dialer.component';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { HttpClientModule } from '@angular/common/http';
+import { ReminderComponent } from './pages/reminder/reminder.component';
 
 @NgModule({
-  declarations: [AppComponent, DialerComponent],
+  declarations: [AppComponent, DialerComponent, ReminderComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot()],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), HttpClientModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AudioManagement, Broadcaster, CallNumber, CallLog, AndroidPermissions, SMS, BackgroundMode],
   bootstrap: [AppComponent],
 })
