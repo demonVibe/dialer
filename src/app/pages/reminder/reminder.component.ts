@@ -20,11 +20,11 @@ export class ReminderComponent implements OnInit {
 
   addReminder() {
     console.log(this.log);
-    // this.clickup.createTask(log)
-    //   .subscribe(data => {
-    //     console.log(data);
-    //   }, error => {
-    //     console.log(error);
-    //   });
+    this.clickup.createTask(this.log)
+      .subscribe(data => {
+        console.log(data);
+      }, error => {
+        console.log(error);
+      });
   }
 }

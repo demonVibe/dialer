@@ -10,13 +10,13 @@ import { ClickupTask } from '../interfaces/clickup-task';
 })
 export class ClickupService {
 
-  demoTask: ClickupTask = {
+  task: ClickupTask = {
     "name": "Task added from dialer",
     "description": "Comment added from dialer",
     "assignees": [
       3425866
     ],
-    "tags": [
+    "tags": [   //todo add tags for call types
     ],
     "status": "Open",
     "priority": 1,
@@ -37,13 +37,34 @@ export class ClickupService {
 
   createTask(log: Logs): Observable<any> {
     console.log(log);
+    let task: ClickupTask = {
+      "name": `${log.number} - ${log.name}`,
+      "description": `Total Calls - ${log.history.length+1}\n Last Call Duration - ${log.duration}`,  //todo add comment 
+      "assignees": [
+        3425866
+      ],
+      "tags": [
+      ],
+      "status": "Open",
+      "priority": 1,  //todo get from app
+      "due_date": 1508369194377, //todo get from app
+      "due_date_time": true,  //todo get from app
+      "time_estimate": null,
+      "start_date": Date.parse(log.date.toString()),
+      "start_date_time": true,
+      "notify_all": true,
+      "parent": null,
+      "links_to": null,
+      "custom_fields": [
+      ]
+    }
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: environment.clickupApiKey
       })
     };
-    let postData = this.demoTask
+    let postData = task
 
     return this.http.post(`${environment.clickupBaseUrl}/list/${environment.list_id_tasks}/task`, postData, httpOptions)
   }
