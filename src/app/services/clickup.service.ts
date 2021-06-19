@@ -42,7 +42,6 @@ export class ClickupService {
       "name": `${log.number} ${log.name}`,
       "description": `${reminderData.notes||""} \n\nTotal Calls - ${log.history.length + 1}\nLast Call Duration - ${log.duration}`,
       "assignees": [
-        3425866
       ],
       "tags": [
       ],
@@ -53,7 +52,7 @@ export class ClickupService {
       "time_estimate": null,
       "start_date": Date.parse(log.date.toString()),
       "start_date_time": true,
-      "notify_all": false,
+      "notify_all": true,
       "parent": null,
       "links_to": null,
       "custom_fields": [

@@ -11,7 +11,7 @@ export const environment = {
   customFieldPhoneId: "8a24e8f4-b929-4db0-9a5c-faf474d3e124",
   customFieldCallType: {
     enquiry: "fbaec7cd-aa6a-4a28-bb5c-abcdeabca62f",
-    numberPlate: "2cfb2f88-9767-47e8-9394-14327c36b9d4",
+    numberplate: "2cfb2f88-9767-47e8-9394-14327c36b9d4",
     registrationcard: "7d86a912-f121-42f8-a7d8-76d8e69c874f",
     insurance: "4e67b2aa-c83b-4cc8-b708-509a33f3c9a1",
     dues: "3a197684-880f-46ba-b4c7-d8e51d33e3a2",

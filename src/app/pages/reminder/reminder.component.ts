@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { Logs } from 'src/app/interfaces/logs';
 import { Reminder } from 'src/app/interfaces/reminder';
 import { ClickupService } from 'src/app/services/clickup.service';
@@ -39,7 +40,8 @@ export class ReminderComponent implements OnInit {
   }
 
   constructor(
-    private clickup: ClickupService
+    private clickup: ClickupService,
+    private modal: ModalController
   ) {
   }
 
@@ -51,8 +53,10 @@ export class ReminderComponent implements OnInit {
     this.clickup.createTask(this.log, this.reminderData)
       .subscribe(data => {
         console.log(data);
+        this.modal.dismiss();
       }, error => {
         console.log(error);
+        this.modal.dismiss();
       });
   }
 }
