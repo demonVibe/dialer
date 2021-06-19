@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Broadcaster } from '@ionic-native/broadcaster/ngx';
 import { CallLog, CallLogObject } from '@ionic-native/call-log/ngx';
-import { ModalController } from '@ionic/angular';
+import { isPlatform, ModalController } from '@ionic/angular';
 import { Logs } from '../interfaces/logs';
 import { DialerComponent } from '../pages/dialer/dialer.component';
 import { LogsService } from '../services/logs.service';
@@ -31,21 +31,25 @@ export class HomePage {
     private storage: StorageService,
   ) {
 
-    this.filteredLogs = environment.demoLogs;
+    !isPlatform('android') ? this.filteredLogs = environment.demoLogs : null
 
-    this.broadcaster.addEventListener('android.intent.action.PHONE_STATE', true)
-      .subscribe((event) => {
-        console.log('Event Run', event)
-        if (event.incoming_number && event.state == "IDLE") {
-          setTimeout(() => {
-            this.getLogs();
-          }, 2000)
-        }
-      });
+    if (isPlatform('android')) {
+      this.broadcaster.addEventListener('android.intent.action.PHONE_STATE', true)
+        .subscribe((event) => {
+          console.log('Event Run', event)
+          if (event.incoming_number && event.state == "IDLE") {
+            setTimeout(() => {
+              this.getLogs();
+            }, 2000)
+          }
+        })
+    }
+
     this.storage.getLastFetched()
       .then(lastFetched => {
         console.log('got lastfetched'); this.logs.lastFetched = lastFetched
-        this.requestPermission();
+        if (isPlatform('android'))
+          this.requestPermission();
       })
       .catch(err => console.error('Unable to get lastFetched'))
   }

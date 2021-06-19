@@ -17,11 +17,12 @@ import { DialerComponent } from './pages/dialer/dialer.component';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { ReminderComponent } from './pages/reminder/reminder.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, DialerComponent, ReminderComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), HttpClientModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AudioManagement, Broadcaster, CallNumber, CallLog, AndroidPermissions, SMS, BackgroundMode],
   bootstrap: [AppComponent],
 })

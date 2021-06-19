@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { getPlatforms, isPlatform, Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { AudioManagement } from '@ionic-native/audio-management/ngx';
 import { CommonService } from './services/common.service';
@@ -19,8 +19,10 @@ export class AppComponent {
     private backgroundMode: BackgroundMode
   ) {
     this.platform.ready().then(() => {
-      this.initAppFunc();
-      this.backgroundService();
+      if (isPlatform('android')) {
+        this.initAppFunc();
+        this.backgroundService();
+      }
     })
   }
 
@@ -39,7 +41,7 @@ export class AppComponent {
         console.log(reason);
       });
   }
-  backgroundService(){
+  backgroundService() {
     this.backgroundMode.enable();
     this.backgroundMode.on('enable')
       .subscribe(() => {
@@ -47,22 +49,22 @@ export class AppComponent {
         // this.backgroundMode.disableWebViewOptimizations(); 
       }, err => console.log('error background mode'));
 
-      this.backgroundMode.on('disable')
+    this.backgroundMode.on('disable')
       .subscribe(() => {
         console.log('disable called')
       }, err => console.log('error background mode'));
-      
-      this.backgroundMode.on('activate')
+
+    this.backgroundMode.on('activate')
       .subscribe(() => {
         console.log('activate called')
       }, err => console.log('error background mode'));
-      
-      this.backgroundMode.on('deactivate')
+
+    this.backgroundMode.on('deactivate')
       .subscribe(() => {
         console.log('deactivate called')
       }, err => console.log('error background mode'));
-      
-      this.backgroundMode.on('failure')
+
+    this.backgroundMode.on('failure')
       .subscribe(() => {
         console.log('failure called')
       }, err => console.log('error background mode'));

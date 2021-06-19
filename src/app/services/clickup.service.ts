@@ -4,6 +4,7 @@ import { Logs } from '../interfaces/logs';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { ClickupTask } from '../interfaces/clickup-task';
+import { Reminder } from '../interfaces/reminder';
 
 @Injectable({
   providedIn: 'root'
@@ -35,27 +36,35 @@ export class ClickupService {
     private http: HttpClient,
   ) { }
 
-  createTask(log: Logs): Observable<any> {
+  createTask(log: Logs, reminderData: Reminder): Observable<any> {
     console.log(log);
     let task: ClickupTask = {
       "name": `${log.number} - ${log.name}`,
-      "description": `Total Calls - ${log.history.length+1}\n Last Call Duration - ${log.duration}`,  //todo add comment 
+      "description": `${reminderData.notes||""} \n\nTotal Calls - ${log.history.length + 1}\nLast Call Duration - ${log.duration}`,
       "assignees": [
         3425866
       ],
       "tags": [
       ],
       "status": "Open",
-      "priority": 1,  //todo get from app
-      "due_date": 1508369194377, //todo get from app
-      "due_date_time": true,  //todo get from app
+      "priority": reminderData.priority || 3,
+      "due_date": Date.parse(reminderData.reminderTime),
+      "due_date_time": true,
       "time_estimate": null,
       "start_date": Date.parse(log.date.toString()),
       "start_date_time": true,
-      "notify_all": true,
+      "notify_all": false,
       "parent": null,
       "links_to": null,
       "custom_fields": [
+        {
+          id: environment.customFieldId,
+          value: [environment.customFieldCallType[reminderData.callType]]
+        },
+        {
+          id: environment.customFieldPhoneId,
+          value: `+91${log.number}`
+        }
       ]
     }
     const httpOptions = {
@@ -64,8 +73,7 @@ export class ClickupService {
         Authorization: environment.clickupApiKey
       })
     };
-    let postData = task
-
-    return this.http.post(`${environment.clickupBaseUrl}/list/${environment.list_id_tasks}/task`, postData, httpOptions)
+    return this.http.post(`${environment.clickupBaseUrl}/list/${environment.list_id}/task`, task, httpOptions)
   }
+
 }

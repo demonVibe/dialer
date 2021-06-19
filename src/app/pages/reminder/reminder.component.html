@@ -1,3 +1,27 @@
-<ion-button (click)="addReminder()">
-  reminder works!
-</ion-button>
+<ion-list>
+  <ion-item>
+    <ion-label>Priority</ion-label>
+    <ion-select interface="popover" placeholder="Select One" [(ngModel)]="reminderData.priority">
+      <ion-select-option *ngFor="let p of reminderOptions.priority" [value]="p.value">{{p.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Call Type</ion-label>
+    <ion-select [interfaceOptions]="reminderOptions.popover" interface="popover" placeholder="Select One" [(ngModel)]="reminderData.callType">
+      <ion-select-option *ngFor="let c of reminderOptions.callType" [value]="c.value">{{c.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Reminder Time</ion-label>
+    <ion-datetime displayFormat="D MMM @hh:mm a" min="2021" max="2022" hourValues="9,10,11,12,13,14,15,16,17,18"
+      minuteValues="0,15,30,45" pickerFormat="D MMM H:mm" [(ngModel)]="reminderData.reminderTime"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Enter any notes here...</ion-label>
+    <ion-textarea [(ngModel)]="reminderData.notes"></ion-textarea>
+  </ion-item>
+  <ion-button expand="block" color="light" shape="round" (click)="addReminder()">
+    <ion-icon slot="start" name="notifications"></ion-icon>
+    Remind Me
+  </ion-button>
+</ion-list>

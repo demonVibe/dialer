@@ -3,6 +3,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { AudioManagement } from '@ionic-native/audio-management/ngx';
 import { Broadcaster } from '@ionic-native/broadcaster/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
+import { isPlatform } from '@ionic/angular';
 import { MessagesService } from './messages.service';
 
 @Injectable({
@@ -17,21 +18,23 @@ export class CommonService {
     private sms: SMS,
     private androidPermissions: AndroidPermissions,
   ) {
-    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.SEND_SMS).then(
-      result => console.log('Has permission?', result.hasPermission),
-      err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS)
-    );
-    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_PHONE_STATE).then(
-      result => console.log('Has permission?', result.hasPermission),
-      err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_PHONE_STATE)
-    );
-    this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.SEND_SMS, this.androidPermissions.PERMISSION.READ_PHONE_STATE]);
-    this.broadcaster.addEventListener('android.media.RINGER_MODE_CHANGED', true).subscribe((event) => {
-      console.log('Event Run type', event["android.media.EXTRA_RINGER_MODE"]);
-      if (event["android.media.EXTRA_RINGER_MODE"] != 2) {
-        this.setRingVolMax();
-      }
-    });
+    if (isPlatform('android')) {
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.SEND_SMS).then(
+        result => console.log('Has permission?', result.hasPermission),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS)
+      );
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_PHONE_STATE).then(
+        result => console.log('Has permission?', result.hasPermission),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_PHONE_STATE)
+      );
+      this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.SEND_SMS, this.androidPermissions.PERMISSION.READ_PHONE_STATE]);
+      this.broadcaster.addEventListener('android.media.RINGER_MODE_CHANGED', true).subscribe((event) => {
+        console.log('Event Run type', event["android.media.EXTRA_RINGER_MODE"]);
+        if (event["android.media.EXTRA_RINGER_MODE"] != 2) {
+          this.setRingVolMax();
+        }
+      });
+    }
   }
 
   public setRingVolMax() {
