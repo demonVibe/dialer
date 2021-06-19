@@ -39,7 +39,7 @@ export class ClickupService {
   createTask(log: Logs, reminderData: Reminder): Observable<any> {
     console.log(log);
     let task: ClickupTask = {
-      "name": `${log.number} - ${log.name}`,
+      "name": `${log.number} ${log.name}`,
       "description": `${reminderData.notes||""} \n\nTotal Calls - ${log.history.length + 1}\nLast Call Duration - ${log.duration}`,
       "assignees": [
         3425866
