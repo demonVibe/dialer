@@ -9,6 +9,7 @@ import { PhoneService } from '../services/phone.service';
 import { StorageService } from '../services/storage.service';
 import { environment } from '../../environments/environment';
 import { ReminderComponent } from '../pages/reminder/reminder.component';
+import { CommonService } from '../services/common.service';
 
 @Component({
   selector: 'app-home',
@@ -29,6 +30,7 @@ export class HomePage {
     private modalController: ModalController,
     private phoneService: PhoneService,
     private storage: StorageService,
+    private common:CommonService
   ) {
 
     !isPlatform('android') ? this.filteredLogs = environment.demoLogs : null
@@ -146,4 +148,7 @@ export class HomePage {
     return await modal.present();
   }
 
+  recordNote(){
+    this.common.presentToast('Coming Soon...')
+  }
 }

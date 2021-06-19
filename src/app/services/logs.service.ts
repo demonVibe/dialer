@@ -34,7 +34,7 @@ export class LogsService {
           console.log('cachedLogs', cachedLogs)
           fetchedLogs = _.concat(fetchedLogs, cachedLogs)
         }
-        this.storage.setRawLogs(_.take(fetchedLogs, 100))
+        this.storage.setRawLogs(_.take(fetchedLogs, 80))
         cachedLogs = [];
         _.forEach(_.groupBy(fetchedLogs, 'number'), (log) => {
           // console.log('inside loop', JSON.stringify(log));

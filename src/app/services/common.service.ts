@@ -3,7 +3,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { AudioManagement } from '@ionic-native/audio-management/ngx';
 import { Broadcaster } from '@ionic-native/broadcaster/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
-import { isPlatform } from '@ionic/angular';
+import { isPlatform, ToastController } from '@ionic/angular';
 import { MessagesService } from './messages.service';
 
 @Injectable({
@@ -17,6 +17,7 @@ export class CommonService {
     private messages: MessagesService,
     private sms: SMS,
     private androidPermissions: AndroidPermissions,
+    private toastController: ToastController
   ) {
     if (isPlatform('android')) {
       this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.SEND_SMS).then(
@@ -69,5 +70,13 @@ export class CommonService {
     var success = function () { alert('Message sent successfully'); };
     var error = function (e) { alert('Message Failed:' + e); };
     return this.sms.send(number, message, options);
+  }
+
+  public async presentToast(message:string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
   }
 }

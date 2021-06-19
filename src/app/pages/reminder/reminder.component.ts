@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Logs } from 'src/app/interfaces/logs';
 import { Reminder } from 'src/app/interfaces/reminder';
 import { ClickupService } from 'src/app/services/clickup.service';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-reminder',
@@ -41,7 +42,8 @@ export class ReminderComponent implements OnInit {
 
   constructor(
     private clickup: ClickupService,
-    private modal: ModalController
+    private modal: ModalController,
+    private common: CommonService
   ) {
   }
 
@@ -53,9 +55,11 @@ export class ReminderComponent implements OnInit {
     this.clickup.createTask(this.log, this.reminderData)
       .subscribe(data => {
         console.log(data);
+        this.common.presentToast('Reminder Set...');
         this.modal.dismiss();
       }, error => {
         console.log(error);
+        this.common.presentToast('An error occurred');
         this.modal.dismiss();
       });
   }
