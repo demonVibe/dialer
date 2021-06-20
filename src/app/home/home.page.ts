@@ -30,7 +30,7 @@ export class HomePage {
     private modalController: ModalController,
     private phoneService: PhoneService,
     private storage: StorageService,
-    private common:CommonService
+    private common: CommonService
   ) {
 
     // !isPlatform('android') ? this.filteredLogs = environment.demoLogs : null
@@ -49,7 +49,7 @@ export class HomePage {
 
     this.storage.getLastFetched()
       .then(lastFetched => {
-        console.log('got lastfetched'); this.logs.lastFetched = lastFetched
+        console.log('got lastfetched', lastFetched); this.logs.lastFetched = lastFetched
         if (isPlatform('android'))
           this.requestPermission();
       })
@@ -75,17 +75,21 @@ export class HomePage {
   }
 
   private getLogs(callType?: number) {
+    const days = 3;
     let logFilters: CallLogObject[] = [{
       "name": "type",
       "value": '1',
       "operator": ">="
-    }];
-    this.logs.lastFetched ? logFilters.push({
+    },
+    {
       "name": "date",
-      "value": this.logs.lastFetched,
-      "operator": ">"
-    }) : null;
-    console.log('fetching from', this.logs.lastFetched)
+      "value": (Date.now() - days * 24 * 60 * 60 * 1000).toString(),
+      "operator": ">="
+    }];
+    if(this.logs.lastFetched){
+      logFilters[1].value = this.logs.lastFetched;
+    }
+    console.log('fetching from', logFilters[1].value)
     this.callLog.getCallLog(logFilters)
       .then((fetchedLogs) => {
         this.logs.getCallLogs(fetchedLogs)
@@ -148,7 +152,7 @@ export class HomePage {
     return await modal.present();
   }
 
-  recordNote(){
+  recordNote() {
     this.common.presentToast('Coming Soon...')
   }
 }

@@ -36,8 +36,10 @@
           <img *ngSwitchCase="3" src="assets/03-missed.png">
           <img *ngSwitchDefault src="assets/05-decline.png">
         </ion-avatar>
-        <ion-label (click)="cLog.expanded=!cLog.expanded">
-          <ion-text color="primary">{{cLog?.number}} &nbsp;- {{cLog?.date|date:'shortTime'}}</ion-text>
+        <ion-label>
+          <ion-button (click)="cLog.expanded=!cLog.expanded;" fill="clear">
+            <ion-text color="primary">{{cLog?.number}} &nbsp;- {{cLog?.date|date:'shortTime'}}</ion-text>
+          </ion-button>
           <ion-text *ngIf="cLog.name;">
             <h2>{{cLog?.name}}</h2>
           </ion-text>
@@ -57,7 +59,7 @@
         <ion-item *ngFor="let l of cLog.history">
           <ion-grid>
             <ion-row>
-              <ion-col size="3">
+              <ion-col size="4">
                 <ion-text *ngIf="l.type==1">Incoming</ion-text>
                 <ion-text *ngIf="l.type==2">Outgoing</ion-text>
                 <ion-text *ngIf="l.type==3" color="danger">Missed</ion-text>
