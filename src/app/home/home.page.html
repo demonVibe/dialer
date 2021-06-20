@@ -38,14 +38,14 @@
         </ion-avatar>
         <ion-label>
           <ion-button (click)="cLog.expanded=!cLog.expanded; cd.detectChanges()" fill="clear">
-            <ion-text color="primary">{{cLog?.number}} &nbsp;- {{cLog?.date|date:'shortTime'}}</ion-text>
+            <ion-text color="primary">{{cLog?.number}} &nbsp;({{cLog?.date|date:'shortTime'}})</ion-text>
           </ion-button>
           <ion-text *ngIf="cLog.name;">
             <h2>{{cLog?.name}}</h2>
           </ion-text>
         </ion-label>
-        <ion-button fill="clear" slot="end" (click)="call(cLog.number)">Call</ion-button>
-        <ion-badge slot="end" color="medium">
+        <ion-button fill="clear" slot="end" (click)="call(cLog.number)" class="clear-margin">Call</ion-button>
+        <ion-badge slot="end" color="medium" class="clear-margin">
           {{cLog?.history.length}}</ion-badge>
       </ion-item>
 
