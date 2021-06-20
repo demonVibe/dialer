@@ -40,7 +40,7 @@ export class ClickupService {
     console.log(log);
     let task: ClickupTask = {
       "name": `${log.number} ${log.name}`,
-      "description": `${reminderData.notes||""} \n\nTotal Calls - ${log.history.length + 1}\nLast Call Duration - ${log.duration}`,
+      "description": `Notes-${reminderData.notes||""} \n\nTotal Calls - ${log.history.length + 1}\nLast Call Duration - ${log.duration}`,
       "assignees": [
       ],
       "tags": [

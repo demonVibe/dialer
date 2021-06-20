@@ -1,23 +1,32 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="secondary">
+  <ion-toolbar color="primary">
     <ion-title>
       Settings
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <!-- <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+      <ion-title size="large">Settings</ion-title>
     </ion-toolbar>
-  </ion-header>
-  <ion-item>
-    <ion-label position="floating">Missed Message</ion-label>
-    <ion-textarea [(ngModel)]="messages.missed" name="missed" auto-grow rows="5" type="text" maxlength="1600" (ionBlur)=setMessage()></ion-textarea>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Off Hours Message</ion-label>
-    <ion-textarea [(ngModel)]="messages.offHours" name="missed" auto-grow rows="5" type="text" maxlength="1600" (ionBlur)=setMessage()></ion-textarea>
-  </ion-item>
-  <!-- <app-explore-container name="Tab 2 page"></app-explore-container> -->
+  </ion-header> -->
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Messages</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label position="floating">Missed Message</ion-label>
+      <ion-textarea [(ngModel)]="messages.missed" name="missed" auto-grow rows="4" type="text" maxlength="1600"
+        (ionBlur)=setMessage()></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Off Hours Message</ion-label>
+      <ion-textarea [(ngModel)]="messages.offHours" name="missed" auto-grow rows="4" type="text" maxlength="1600"
+        (ionBlur)=setMessage()></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+
+
 </ion-content>
