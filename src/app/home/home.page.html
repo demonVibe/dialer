@@ -41,7 +41,7 @@
             <ion-text color="primary">{{cLog?.number}} &nbsp;({{cLog?.date|date:'shortTime'}})</ion-text>
           </ion-button>
           <ion-text *ngIf="cLog.name;">
-            <h2>{{cLog?.name}}</h2>
+            <p>{{cLog?.name}}</p>
           </ion-text>
         </ion-label>
         <ion-button fill="clear" slot="end" (click)="call(cLog.number)" class="clear-margin">Call</ion-button>
