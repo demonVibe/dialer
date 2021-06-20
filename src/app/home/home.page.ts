@@ -26,7 +26,7 @@ export class HomePage {
     private callLog: CallLog,
     private broadcaster: Broadcaster,
     private logs: LogsService,
-    private cd: ChangeDetectorRef,
+    public cd: ChangeDetectorRef,
     private modalController: ModalController,
     private phoneService: PhoneService,
     private storage: StorageService,

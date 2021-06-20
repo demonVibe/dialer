@@ -37,7 +37,7 @@
           <img *ngSwitchDefault src="assets/05-decline.png">
         </ion-avatar>
         <ion-label>
-          <ion-button (click)="cLog.expanded=!cLog.expanded;" fill="clear">
+          <ion-button (click)="cLog.expanded=!cLog.expanded; cd.detectChanges()" fill="clear">
             <ion-text color="primary">{{cLog?.number}} &nbsp;- {{cLog?.date|date:'shortTime'}}</ion-text>
           </ion-button>
           <ion-text *ngIf="cLog.name;">
