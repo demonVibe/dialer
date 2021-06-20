@@ -33,7 +33,7 @@ export class HomePage {
     private common: CommonService
   ) {
 
-    !isPlatform('android') ? this.filteredLogs = environment.demoLogs : null
+    // !isPlatform('android') ? this.filteredLogs = environment.demoLogs : null
 
     if (isPlatform('android')) {
       this.broadcaster.addEventListener('android.intent.action.PHONE_STATE', true)

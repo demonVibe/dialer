@@ -13,4 +13,5 @@ export const environment = {
     dues: "3a197684-880f-46ba-b4c7-d8e51d33e3a2",
     workshop: "253baeae-6de4-4957-93f6-b088077d99cb"
   },
+  assigneeId:3432171,
 };
