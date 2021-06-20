@@ -62,7 +62,7 @@ export class ClickupService {
         },
         {
           id: environment.customFieldPhoneId,
-          value: `+91${log.number}`
+          value: `+91${log.number.slice(-10)}`
         }
       ]
     }
