@@ -3,6 +3,7 @@ import { StorageService } from './storage.service';
 import * as _ from 'lodash';
 import { CommonService } from './common.service';
 import { Logs } from '../interfaces/logs';
+import { ClickupService } from './clickup.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class LogsService {
 
   constructor(
     private smsService: CommonService,
-    private storage: StorageService
+    private storage: StorageService,
+    private clickup: ClickupService,
   ) {
   }
 
@@ -24,8 +26,9 @@ export class LogsService {
     if (fetchedLogs.length) {
       this.lastFetched = fetchedLogs[0].date.toString()
       this.storage.setLastFetched(this.lastFetched);
-      if (fetchedLogs[0].type == 3)
+      if (fetchedLogs[0].type == 3) {
         this.sendText(fetchedLogs[0]);
+      }
     }
     // @ts-ignore
     return this.storage.getRawLogs()
@@ -60,7 +63,10 @@ export class LogsService {
     this.storage.getSmsLogs()
       .then((log) => {
         console.log('Found Log', log)
+        //if there's no log
         if (!log) {
+          this.clickup.createMissedTask(logData)
+            .subscribe(success => console.info('created task successfully', success), error => console.error('error while creating missed taks when there\'s no log', error))
           this.smsService.sendSMS(logData.number)
             .then((res) => {
               console.info('Message Sent Success')
@@ -69,13 +75,15 @@ export class LogsService {
               this.storage.setSMSLogs(log)
             })
             .catch((err) => console.error("Can't send SMS", err))
-
         } else {
           console.info('log else', log, _.find(log, ['number', logData.number]));
+          //if number is present in logs
           if (_.find(log, ['number', logData.number])) {
             let elapsed = new Date().getTime() - Number(_.find(log, ['number', logData.number]).date);
             console.log('Elapsed', `${elapsed / 60000}m`);
             if (elapsed / 60000 > minutesPassed) {
+              this.clickup.createMissedTask(logData)
+                .subscribe(success => console.info('created task successfully', success), error => console.error('error while creating missed taks when there\'s no log', error))
               this.smsService.sendSMS(logData.number)
                 .then(() => {
                   console.info('Message Resent Success')
@@ -89,6 +97,8 @@ export class LogsService {
             }
 
           } else {
+            this.clickup.createMissedTask(logData)
+              .subscribe(success => console.info('created task successfully', success), error => console.error('error while creating missed taks when there\'s no log', error))
             this.smsService.sendSMS(logData.number)
               .then(() => {
                 console.info('Message Sent Success')

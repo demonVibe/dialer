@@ -13,5 +13,5 @@ export interface ClickupTask {
     notify_all: boolean,
     parent?: any,
     links_to?: any,
-    custom_fields: any[]
+    custom_fields?: any[]
 }

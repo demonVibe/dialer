@@ -29,8 +29,8 @@ export class ReminderComponent implements OnInit {
     ],
     callType: [
       { value: "enquiry", name: "Enquiry" },
-      { value: "numberplate", name: "Number Plate" },
-      { value: "registrationcard", name: "Registration Card" },
+      { value: "number plate", name: "Number Plate" },
+      { value: "registration card", name: "Registration Card" },
       { value: "insurance", name: "Insurance" },
       { value: "dues", name: "Dues" },
       { value: "workshop", name: "Workshop" },
@@ -52,7 +52,7 @@ export class ReminderComponent implements OnInit {
 
   addReminder() {
     console.log(this.log, this.reminderData);
-    this.clickup.createTask(this.log, this.reminderData)
+    this.clickup.createReminderTask(this.log, this.reminderData)
       .subscribe(data => {
         console.log(data);
         this.common.presentToast('Reminder Set...');

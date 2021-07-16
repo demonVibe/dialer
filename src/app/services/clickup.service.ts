@@ -11,6 +11,13 @@ import { Reminder } from '../interfaces/reminder';
 })
 export class ClickupService {
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: environment.clickupApiKey
+    })
+  };
+
   task: ClickupTask = {
     "name": "Task added from dialer",
     "description": "Comment added from dialer",
@@ -36,15 +43,16 @@ export class ClickupService {
     private http: HttpClient,
   ) { }
 
-  createTask(log: Logs, reminderData: Reminder): Observable<any> {
+  createReminderTask(log: Logs, reminderData: Reminder): Observable<any> {
     console.log(log);
     let task: ClickupTask = {
       "name": `${log.number} ${log.name}`,
       "description": `Notes-${reminderData.notes || ""} \n\nTotal Calls - ${log.history.length + 1}\nLast Call Duration - ${log.duration}`,
       "assignees": [
-        environment.assigneeId, 3425866
+        environment.assigneeId
       ],
       "tags": [
+        reminderData.callType
       ],
       "status": "Open",
       "priority": reminderData.priority || 3,
@@ -57,23 +65,40 @@ export class ClickupService {
       "parent": null,
       "links_to": null,
       "custom_fields": [
-        {
-          id: environment.customFieldId,
-          value: [environment.customFieldCallType[reminderData.callType]]
-        },
-        {
-          id: environment.customFieldPhoneId,
-          value: `+91${log.number.slice(-10)}`
-        }
+        // {
+        //   id: environment.customFieldId,
+        //   value: [environment.customFieldCallType[reminderData.callType]]
+        // },
+        // {
+        //   id: environment.customFieldPhoneId,
+        //   value: `+91${log.number.slice(-10)}`
+        // }
       ]
     }
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: environment.clickupApiKey
-      })
-    };
-    return this.http.post(`${environment.clickupBaseUrl}/list/${environment.list_id}/task`, task, httpOptions)
+    return this.http.post(`${environment.clickupBaseUrl}/list/${environment.list_id}/task`, task, this.httpOptions)
   }
 
+  createMissedTask(log: Logs): Observable<any> {
+    console.log("Creating Missed Task", log);
+    let task: ClickupTask = {
+      "name": `${log.number} ${log.name}`,
+      "description": `Attend to this call immediately`,
+      "assignees": [
+        environment.assigneeId
+      ],
+      "tags": [
+        "missed call"
+      ],
+      "status": "Open",
+      "priority": 1,
+      "due_date": Date.parse(new Date().toISOString()),
+      "due_date_time": true,
+      "time_estimate": null,
+      "start_date": Date.parse(log.date.toString()),
+      "start_date_time": true,
+      "notify_all": true,
+      "parent": null
+    }
+    return this.http.post(`${environment.clickupBaseUrl}/list/${environment.list_id}/task`, task, this.httpOptions)
+  }
 }
