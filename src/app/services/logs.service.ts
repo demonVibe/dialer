@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { CommonService } from './common.service';
 import { Logs } from '../interfaces/logs';
 import { ClickupService } from './clickup.service';
+import { VoicecallService } from './voicecall.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class LogsService {
     private smsService: CommonService,
     private storage: StorageService,
     private clickup: ClickupService,
+    private voicecall: VoicecallService
   ) {
   }
 
@@ -34,7 +36,7 @@ export class LogsService {
     return this.storage.getRawLogs()
       .then(cachedLogs => {
         if (cachedLogs) {
-          console.log('cachedLogs', cachedLogs)
+          // console.log('cachedLogs', cachedLogs)
           fetchedLogs = _.concat(fetchedLogs, cachedLogs)
         }
         this.storage.setRawLogs(_.take(fetchedLogs, 80))
@@ -48,14 +50,6 @@ export class LogsService {
         return _.orderBy(cachedLogs, ['date'], ['desc']);
       })
       .catch(() => console.error('Can\'t get Raw Logs'))
-
-    // return this.storage.getSmsLogs().then((smsLog) => {
-    //   // console.log('smsLog', JSON.stringify(smsLog));
-    //   fLogs.forEach((log, index) => {
-    //     fLogs[index].messageSent = typeof (_.find(smsLog, ["number", log.number])) != "undefined"
-    //   })
-    //   // console.log('fLogs', JSON.stringify(fLogs));
-    // })
   }
 
   public sendText(logData: Logs) {
@@ -75,15 +69,17 @@ export class LogsService {
               this.storage.setSMSLogs(log)
             })
             .catch((err) => console.error("Can't send SMS", err))
+          // this.voicecall.sendVoiceCall()
+          //   .subscribe(success => console.info('call sent successfully', success), error => console.error('error while sending call', error))
         } else {
           console.info('log else', log, _.find(log, ['number', logData.number]));
           //if number is present in logs
           if (_.find(log, ['number', logData.number])) {
             let elapsed = new Date().getTime() - Number(_.find(log, ['number', logData.number]).date);
-            console.log('Elapsed', `${elapsed / 60000}m`);
+            // console.log('Elapsed', `${elapsed / 60000}m`);
             if (elapsed / 60000 > minutesPassed) {
               this.clickup.createMissedTask(logData)
-                .subscribe(success => console.info('created task successfully', success), error => console.error('error while creating missed taks when there\'s no log', error))
+                .subscribe(success => console.info('created task successfully', success), error => console.error('error while creating missed taks when there\'s log', error))
               this.smsService.sendSMS(logData.number)
                 .then(() => {
                   console.info('Message Resent Success')
@@ -92,6 +88,8 @@ export class LogsService {
                   this.storage.setSMSLogs(log)
                 })
                 .catch((err) => console.error("Can't send SMS", err))
+              // this.voicecall.sendVoiceCall()
+              //   .subscribe(success => console.info('call sent successfully', success), error => console.error('error while sending call', error))
             } else {
               console.info('Already Sent Message within ', minutesPassed / 60, ' hours');
             }
@@ -106,13 +104,15 @@ export class LogsService {
                 this.storage.setSMSLogs(log)
                 console.log('send message first time', logData)
               }).catch((err) => {
-                console.log('Unable to send message first time', err)
+                console.error('Unable to send message first time', err)
               })
+            // this.voicecall.sendVoiceCall()
+            //   .subscribe(success => console.info('call sent successfully', success), error => console.error('error while sending call', error))
           }
         }
       })
       .catch((err) => {
-        console.log('Unable to fetch logs', err);
+        console.error('Unable to fetch logs', err);
       })
 
   }

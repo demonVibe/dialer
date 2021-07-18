@@ -152,7 +152,7 @@ export class HomePage {
     return await modal.present();
   }
 
-  recordNote() {
-    this.common.presentToast('Coming Soon...')
-  }
+  // recordNote() {
+  //   this.common.presentToast('Coming Soon...')
+  // }
 }

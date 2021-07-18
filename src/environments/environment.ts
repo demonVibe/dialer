@@ -7,6 +7,8 @@ export const environment = {
   clickupBaseUrl: "https://api.clickup.com/api/v2",
   clickupApiKey: "pk_3425866_SK24KM1D8RDMZH81KG4AM7OFXYWV7YL8",
   list_id: "11981038",
+  clickiApi: "X4ouc5aQ6FQCNm6Z0Mno2IR-CV6gKU5VKXhLUQFVyYlUjo5UHjaMbdR0AZsWtGQo",
+  clickiURL:"https://caller.clickiexpress.com/api_v2/voice-call",
   // customFieldId: "65db9101-b893-4969-8566-74e4928eafa7",
   // customFieldPhoneId: "8a24e8f4-b929-4db0-9a5c-faf474d3e124",
   // customFieldCallType: {

@@ -23,11 +23,11 @@
   <ion-list *ngIf="filteredLogs.length">
     <!-- <ion-card > -->
     <ion-item-sliding *ngFor="let cLog of filteredLogs" (ionDrag)="cLog.expanded=false">
-      <ion-item-options side="start" (click)=recordNote()>
+      <!-- <ion-item-options side="start" (click)=recordNote()>
         <ion-item-option color="danger" expandable>
           Record
         </ion-item-option>
-      </ion-item-options>
+      </ion-item-options> -->
 
       <ion-item>
         <ion-avatar slot="start" [ngSwitch]="cLog.type" (click)="call(cLog.number)">

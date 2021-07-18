@@ -17,7 +17,7 @@
       minuteValues="0,15,30,45" pickerFormat="D MMM H:mm" [(ngModel)]="reminderData.reminderTime"></ion-datetime>
   </ion-item>
   <ion-item>
-    <ion-label position="floating">Enter any notes here...</ion-label>
+    <ion-label position="floating">What was the call about?</ion-label>
     <ion-textarea [(ngModel)]="reminderData.notes"></ion-textarea>
   </ion-item>
   <ion-button expand="block" color="light" shape="round" (click)="addReminder()">
