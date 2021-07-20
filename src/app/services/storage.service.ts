@@ -33,12 +33,12 @@ export class StorageService {
     return await this._storage?.get(key);
   }
 
-  public setSMSLogs(value?: Logs) {
+  public setNotifierLogs(value?: Logs) {
     console.info('pushing value', value)
     this._storage?.set(this.key, value);
   }
 
-  public async getSmsLogs() {
+  public async getNotifierLogs() {
     return await this._storage?.get(this.key);
   }
 

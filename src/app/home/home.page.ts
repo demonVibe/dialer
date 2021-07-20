@@ -84,7 +84,7 @@ export class HomePage {
     {
       "name": "date",
       "value": (Date.now() - days * 24 * 60 * 60 * 1000).toString(),
-      "operator": ">="
+      "operator": ">"
     }];
     if(this.logs.lastFetched){
       logFilters[1].value = this.logs.lastFetched;
@@ -104,10 +104,10 @@ export class HomePage {
       .catch((err) => console.error("Can't get phone Log"))
   }
 
-  sendText(log: Logs) {
+  responseHandler(log: Logs) {
     log.messageSent = true;
     console.log('sending text to ', log)
-    this.logs.sendText(log)
+    this.logs.responseHandler(log)
   }
 
   async presentDialer() {
