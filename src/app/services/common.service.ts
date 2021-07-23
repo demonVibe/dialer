@@ -5,11 +5,14 @@ import { Broadcaster } from '@ionic-native/broadcaster/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
 import { isPlatform, ToastController } from '@ionic/angular';
 import { MessagesService } from './messages.service';
+import { Device, DeviceInfo } from '@capacitor/device';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
+
+  public deviceInfo: DeviceInfo;
 
   constructor(
     private audioman: AudioManagement,
@@ -36,7 +39,15 @@ export class CommonService {
         }
       });
     }
+    this.logDeviceInfo()
   }
+
+  logDeviceInfo = async () => {
+    const info = await Device.getInfo();
+    console.log(info);
+    this.deviceInfo = info
+  };
+
 
   public setRingVolMax() {
     this.audioman.setAudioMode(AudioManagement.AudioMode.NORMAL)
@@ -72,7 +83,7 @@ export class CommonService {
     return this.sms.send(number, message, options);
   }
 
-  public async presentToast(message:string) {
+  public async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
       duration: 3000

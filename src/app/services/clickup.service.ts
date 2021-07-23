@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { ClickupTask } from '../interfaces/clickup-task';
 import { Reminder } from '../interfaces/reminder';
+import { CommonService } from './common.service';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,7 @@ export class ClickupService {
   }
   constructor(
     private http: HttpClient,
+    private common: CommonService
   ) { }
 
   createReminderTask(log: Logs, reminderData: Reminder): Observable<any> {
@@ -82,7 +84,7 @@ export class ClickupService {
     console.log("Creating Missed Task", log);
     let task: ClickupTask = {
       "name": `${log.number} ${log.name}`,
-      "description": `Attend to this call immediately`,
+      "description": `Call missed on ${this.common.deviceInfo.manufacturer} - ${this.common.deviceInfo.model} Attend to this call immediately`,
       "assignees": [
         environment.assigneeId
       ],
