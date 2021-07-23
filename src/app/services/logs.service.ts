@@ -55,24 +55,24 @@ export class LogsService {
   public responseHandler(logData: Logs) {
     let minutesPassed: number = 720;
     this.storage.getNotifierLogs()
-      .then((log) => {
-        console.log('Found Log', log)
+      .then((storageLog) => {
+        console.log('Found Log', storageLog)
         //if there's no log
-        if (!log) {
-          this.notifier(log, logData, 'noLog');
+        if (!storageLog) {
+          this.notifier(storageLog, logData, 'noLog');
         } else {
-          console.info('log else', log, _.find(log, ['number', logData.number]));
+          console.info('log else', storageLog, _.find(storageLog, ['number', logData.number]));
           //if number is present in logs
-          if (_.find(log, ['number', logData.number])) {
-            let elapsed = new Date().getTime() - Number(_.find(log, ['number', logData.number]).date);
+          if (_.find(storageLog, ['number', logData.number])) {
+            let elapsed = new Date().getTime() - Number(_.find(storageLog, ['number', logData.number]).date);
             // console.log('Elapsed', `${elapsed / 60000}m`);
             if (elapsed / 60000 > minutesPassed) {
-              this.notifier(log, logData, 'resent');
+              this.notifier(storageLog, logData, 'resent');
             } else {
               console.info('Already Sent Message within ', minutesPassed / 60, ' hours');
             }
           } else {
-            this.notifier(log, logData, 'send');
+            this.notifier(storageLog, logData, 'send');
           }
         }
       })
@@ -82,23 +82,29 @@ export class LogsService {
 
   }
 
-  private notifier(log: any, logData: Logs, status: string) {
+  private notifier(storageLog: any, logData: Logs, status: string) {
+    let elapsed = new Date().getTime() - Number(logData.date);
+    console.log('elapsed time before notification in mins', elapsed/60000 )
     this.clickup.createMissedTask(logData)
-      .subscribe(success => console.info('created task successfully', success), error => console.error('error while creating missed taks when there\'s no log', error))
-    this.smsService.sendSMS(logData.number)
-      .then((res) => {
-        if (status == 'noLog') {
-          // console.info('Message Sent Success')
-          log = [];
-        } else if (status = 'resent') {
-          // console.info('Message Resent Success')
-          log = _.filter(log, function (o) { return o.number != logData.number });
-        }
-        log.push(logData);
-        this.storage.setNotifierLogs(log)
-      })
-      .catch((err) => console.error("Can't send SMS", err))
-    this.voicecall.sendVoiceCall(logData)
-      .subscribe(success => console.info('call sent successfully', success), error => console.error('error while sending call', error))
+      .subscribe(success => console.info('created task successfully', success), error => console.error('error while creating missed task', error))
+
+    if (elapsed / 60000 < 15) {     //if call was missed within 15 minutes
+      this.smsService.sendSMS(logData.number)
+        .then((res) => {
+          if (status == 'noLog') {
+            // console.info('Message Sent Success')
+            storageLog = [];
+          } else if (status = 'resent') {
+            // console.info('Message Resent Success')
+            storageLog = _.filter(storageLog, function (o) { return o.number != logData.number });
+          }
+          storageLog.push(logData);
+          this.storage.setNotifierLogs(storageLog)
+        })
+        .catch((err) => console.error("Can't send SMS", err))
+      this.voicecall.sendVoiceCall(logData)
+        .subscribe(success => console.info('call sent successfully', success), error => console.error('error while sending call', error))
+    }
+
   }
 }
