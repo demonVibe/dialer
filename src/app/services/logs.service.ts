@@ -84,7 +84,7 @@ export class LogsService {
 
   private notifier(storageLog: any, logData: Logs, status: string) {
     let elapsed = new Date().getTime() - Number(logData.date);
-    console.log('elapsed time before notification in mins', elapsed/60000 )
+    console.log('elapsed time before notification in mins', elapsed / 60000)
     this.clickup.createMissedTask(logData)
       .subscribe(success => console.info('created task successfully', success), error => console.error('error while creating missed task', error))
 
@@ -103,7 +103,8 @@ export class LogsService {
         })
         .catch((err) => console.error("Can't send SMS", err))
       this.voicecall.sendVoiceCall(logData)
-        .subscribe(success => console.info('call sent successfully', success), error => console.error('error while sending call', error))
+        .then(success => console.info('call sent successfully', success))
+        .catch(error => console.error('error while sending call', error))
     }
 
   }

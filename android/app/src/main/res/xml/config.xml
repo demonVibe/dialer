@@ -10,6 +10,10 @@
     <param name="android-package" value="com.cedricclovel.audiomanagement.AudioManagement"/>
   </feature>
 
+  <feature name="CordovaHttpPlugin">
+    <param name="android-package" value="com.silkimen.cordovahttp.CordovaHttpPlugin"/>
+  </feature>
+
   <feature name="Permissions">
     <param name="android-package" value="com.android.plugins.Permissions"/>
   </feature>
@@ -31,6 +35,11 @@
 
   <feature name="Device">
     <param name="android-package" value="org.apache.cordova.device.Device"/>
+  </feature>
+
+  <feature name="File">
+    <param name="android-package" value="org.apache.cordova.file.FileUtils"/>
+    <param name="onload" value="true"/>
   </feature>
 
   <feature name="Sms">
