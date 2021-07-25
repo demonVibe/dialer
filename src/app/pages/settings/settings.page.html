@@ -16,14 +16,22 @@
       <ion-label>Messages</ion-label>
     </ion-list-header>
     <ion-item>
+      <ion-label>Use Device SMS</ion-label>
+      <ion-checkbox (ionChange)=setMessage() slot="end" [(ngModel)]="messages.settings.useSMS"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Use Voice Call</ion-label>
+      <ion-checkbox (ionChange)=setMessage() slot="end" [(ngModel)]="messages.settings.useVoice"></ion-checkbox>
+    </ion-item>
+    <ion-item>
       <ion-label position="floating">Missed Message</ion-label>
-      <ion-textarea [(ngModel)]="messages.missed" name="missed" auto-grow rows="4" type="text" maxlength="1600"
+      <ion-textarea [(ngModel)]="messages.settings.missed" name="missed" auto-grow rows="4" type="text" maxlength="1600"
         (ionBlur)=setMessage()></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Off Hours Message</ion-label>
-      <ion-textarea [(ngModel)]="messages.offHours" name="missed" auto-grow rows="4" type="text" maxlength="1600"
-        (ionBlur)=setMessage()></ion-textarea>
+      <ion-textarea [(ngModel)]="messages.settings.offHours" name="missed" auto-grow rows="4" type="text"
+        maxlength="1600" (ionBlur)=setMessage()></ion-textarea>
     </ion-item>
   </ion-list>
 

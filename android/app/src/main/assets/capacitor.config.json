@@ -10,7 +10,7 @@
 			"androidSplashResourceName": "splash",
 			"androidScaleType": "CENTER_CROP",
 			"splashFullScreen": false,
-			"splashImmersive": true
+			"splashImmersive": false
 		}
 	}
 }

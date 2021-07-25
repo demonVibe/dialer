@@ -64,9 +64,9 @@ export class CommonService {
     // Send an SMS
     // var number = '9110123627'; 
     //document.getElementById('numberTxt').value.toString(); /* iOS: ensure number is actually a string */
-    let message: string = this.messages.defaultMissedMessage;
+    let message: string = this.messages.settings.missed;
     let hour = new Date().getHours();
-    hour > 18 || hour < 9 ? message = this.messages.offHours : message = this.messages.missed;
+    hour > 18 || hour < 9 ? message = this.messages.settings.offHours : null;
     console.log("number=" + number + ", message= " + message);
 
     //CONFIGURATION
@@ -78,8 +78,8 @@ export class CommonService {
       }
     };
 
-    var success = function () { alert('Message sent successfully'); };
-    var error = function (e) { alert('Message Failed:' + e); };
+    // var success = function () { alert('Message sent successfully'); };
+    // var error = function (e) { alert('Message Failed:' + e); };
     return this.sms.send(number, message, options);
   }
 

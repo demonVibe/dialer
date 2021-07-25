@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Settings } from '../interfaces/settings';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -6,38 +7,35 @@ import { StorageService } from './storage.service';
 })
 export class MessagesService {
 
-  missedKey: string = 'missedText';
-  offHoursKey: string = 'offText';
-  public missed: string = null;
-  public offHours: string = null;
-  defaultMissedMessage: string = `Thankyou for contacting Shubham Auto. Sorry, We couldn’t attend to your call right now. We will call you back as soon as possible. You can also contact us through WhatsApp. http://bit.ly/shubhamauto-whatsapp`;
-  defaultOffMessage: string = `Thankyou for contacting Shubham Auto. Sorry, We couldn’t attend to your call right now. We will call you back during office hours i.e 9 am to 6 pm. You can also contact us through WhatsApp. http://bit.ly/shubhamauto-whatsapp`;
+  settingsKey: string = 'settings';
+  public settings: Settings = {
+    useSMS: true,
+    useVoice: false,
+    missed: `Thankyou for contacting Shubham Auto. Sorry, We couldn’t attend to your call right now. We will call you back as soon as possible. You can also contact us through WhatsApp. http://bit.ly/shubhamauto-whatsapp`,
+    offHours: `Thankyou for contacting Shubham Auto. Sorry, We couldn’t attend to your call right now. We will call you back during office hours i.e 9 am to 6 pm. You can also contact us through WhatsApp. http://bit.ly/shubhamauto-whatsapp`
+  };
+
+
   constructor(
     private storage: StorageService
   ) {
-    this.missed = this.defaultMissedMessage;
-    this.offHours = this.defaultOffMessage;
   }
 
   public init() {
-    this.storage.get(this.missedKey)
-      .then((message) => {
-        message ? this.missed = message : this.missed = this.defaultMissedMessage;
+    console.log('settings key', this.settingsKey)
+    this.storage.get(this.settingsKey)
+      .then((settings) => {
+        console.log('got settings', settings)
+        if (settings) {
+          this.settings = settings
+        }
       })
       .catch((err) => {
-        console.log('Unable to get Missed', err)
-      })
-    this.storage.get(this.offHoursKey)
-      .then((message) => {
-        message ? this.offHours = message : this.offHours = this.defaultOffMessage;
-      })
-      .catch((err) => {
-        console.log('Unable to get OffHours', err)
+        console.log('Unable to get Settings', err)
       })
   }
 
-  public setMessage() {
-    this.storage.set(this.missedKey, this.missed);
-    this.storage.set(this.offHoursKey, this.offHours);
+  public saveSettings() {
+    this.storage.set(this.settingsKey, this.settings);
   }
 }

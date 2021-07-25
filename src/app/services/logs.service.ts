@@ -5,6 +5,7 @@ import { CommonService } from './common.service';
 import { Logs } from '../interfaces/logs';
 import { ClickupService } from './clickup.service';
 import { VoicecallService } from './voicecall.service';
+import { MessagesService } from './messages.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class LogsService {
     private smsService: CommonService,
     private storage: StorageService,
     private clickup: ClickupService,
-    private voicecall: VoicecallService
+    private voicecall: VoicecallService,
+    private messages: MessagesService
   ) {
   }
 
@@ -89,22 +91,26 @@ export class LogsService {
       .subscribe(success => console.info('created task successfully', success), error => console.error('error while creating missed task', error))
 
     if (elapsed / 60000 < 15) {     //if call was missed within 15 minutes
-      this.smsService.sendSMS(logData.number)
-        .then((res) => {
-          if (status == 'noLog') {
-            // console.info('Message Sent Success')
-            storageLog = [];
-          } else if (status = 'resent') {
-            // console.info('Message Resent Success')
-            storageLog = _.filter(storageLog, function (o) { return o.number != logData.number });
-          }
-          storageLog.push(logData);
-          this.storage.setNotifierLogs(storageLog)
-        })
-        .catch((err) => console.error("Can't send SMS", err))
-      this.voicecall.sendVoiceCall(logData)
-        .then(success => console.info('call sent successfully', success))
-        .catch(error => console.error('error while sending call', error))
+      if (this.messages.settings.useSMS) {
+        this.smsService.sendSMS(logData.number)
+          .then((res) => {
+            if (status == 'noLog') {
+              // console.info('Message Sent Success')
+              storageLog = [];
+            } else if (status = 'resent') {
+              // console.info('Message Resent Success')
+              storageLog = _.filter(storageLog, function (o) { return o.number != logData.number });
+            }
+            storageLog.push(logData);
+            this.storage.setNotifierLogs(storageLog)
+          })
+          .catch((err) => console.error("Can't send SMS", err))
+      }
+      if (this.messages.settings.useVoice) {
+        this.voicecall.sendVoiceCall(logData)
+          .then(success => console.info('call sent successfully', success))
+          .catch(error => console.error('error while sending call', error))
+      }
     }
 
   }

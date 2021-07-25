@@ -10,6 +10,7 @@ import { StorageService } from '../services/storage.service';
 import { environment } from '../../environments/environment';
 import { ReminderComponent } from '../pages/reminder/reminder.component';
 import { CommonService } from '../services/common.service';
+import { MessagesService } from '../services/messages.service';
 
 @Component({
   selector: 'app-home',
@@ -30,7 +31,8 @@ export class HomePage {
     private modalController: ModalController,
     private phoneService: PhoneService,
     private storage: StorageService,
-    private common: CommonService
+    private common: CommonService,
+    private messages:MessagesService
   ) {
 
     // !isPlatform('android') ? this.filteredLogs = environment.demoLogs : null
@@ -54,6 +56,7 @@ export class HomePage {
           this.requestPermission();
       })
       .catch(err => console.error('Unable to get lastFetched'))
+      this.messages.init();
   }
 
   private requestPermission() {

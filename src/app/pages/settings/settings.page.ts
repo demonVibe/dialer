@@ -13,9 +13,10 @@ export class SettingsPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.messages.init()
   }
 
   setMessage() {
-    this.messages.setMessage();
+    this.messages.saveSettings();
   }
 }
