@@ -108,7 +108,7 @@ export class LogsService {
       }
       if (this.messages.settings.useVoice) {
         this.voicecall.sendVoiceCall(logData)
-          .then(success => console.info('call sent successfully', success))
+          .then(success => console.info('call sent successfully', JSON.stringify(success)))
           .catch(error => console.error('error while sending call', error))
       }
     }
