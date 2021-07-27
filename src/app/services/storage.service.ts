@@ -34,7 +34,7 @@ export class StorageService {
   }
 
   public setNotifierLogs(value?: Logs) {
-    console.info('pushing value', value)
+    console.info('pushing Notifier Logs', value)
     this._storage?.set(this.key, value);
   }
 
@@ -43,7 +43,7 @@ export class StorageService {
   }
 
   public setLastFetched(value?: string) {
-    console.info('pushing value', value)
+    console.info('pushing last fetched', value)
     this._storage?.set(this.lastFetchedKey, value);
   }
 
@@ -52,7 +52,7 @@ export class StorageService {
   }
 
   public setRawLogs(value?: Logs[]) {
-    console.info('pushing value', value)
+    console.info('pushing raw Logs', value)
     this._storage?.set(this.rawLogsKey, value);
   }
 

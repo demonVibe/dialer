@@ -86,23 +86,27 @@ export class LogsService {
 
   private notifier(storageLog: any, logData: Logs, status: string) {
     let elapsed = new Date().getTime() - Number(logData.date);
-    console.log('elapsed time before notification in mins', elapsed / 60000)
+    console.log('elapsed time before notification in mins', elapsed / 60000, 'storageLog', storageLog, 'logData', logData, 'status', status)
     this.clickup.createMissedTask(logData)
-      .subscribe(success => console.info('created task successfully', success), error => console.error('error while creating missed task', error))
+      .subscribe(success => {
+        console.info('created task successfully', success)
+        if (status == 'noLog') {
+          console.info('Task Created First Time', storageLog)
+          storageLog = [];
+        } else if (status = 'resent') {
+          console.info('Task Created again after set time', storageLog)
+          storageLog = _.filter(storageLog, function (o) { return o.number != logData.number });
+        }
+        storageLog.push(logData);
+        console.log('setting logs', storageLog)
+        this.storage.setNotifierLogs(storageLog)
+      }, error => console.error('error while creating missed task', error))
 
     if (elapsed / 60000 < 15) {     //if call was missed within 15 minutes
       if (this.messages.settings.useSMS) {
         this.smsService.sendSMS(logData.number)
           .then((res) => {
-            if (status == 'noLog') {
-              // console.info('Message Sent Success')
-              storageLog = [];
-            } else if (status = 'resent') {
-              // console.info('Message Resent Success')
-              storageLog = _.filter(storageLog, function (o) { return o.number != logData.number });
-            }
-            storageLog.push(logData);
-            this.storage.setNotifierLogs(storageLog)
+            console.log('Message Sent Success')
           })
           .catch((err) => console.error("Can't send SMS", err))
       }
