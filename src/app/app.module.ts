@@ -19,12 +19,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReminderComponent } from './pages/reminder/reminder.component';
 import { FormsModule } from '@angular/forms';
 import { HTTP } from '@ionic-native/http/ngx';
+import { Sim } from '@ionic-native/sim/ngx';
+
 @NgModule({
   declarations: [AppComponent, DialerComponent, ReminderComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), HttpClientModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AudioManagement, Broadcaster, CallNumber, CallLog, AndroidPermissions, SMS,
-    BackgroundMode, HTTP],
+    BackgroundMode, HTTP, Sim],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

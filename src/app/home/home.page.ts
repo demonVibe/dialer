@@ -32,7 +32,7 @@ export class HomePage {
     private phoneService: PhoneService,
     private storage: StorageService,
     private common: CommonService,
-    private messages:MessagesService
+    private messages: MessagesService,
   ) {
 
     // !isPlatform('android') ? this.filteredLogs = environment.demoLogs : null
@@ -56,7 +56,7 @@ export class HomePage {
           this.requestPermission();
       })
       .catch(err => console.error('Unable to get lastFetched'))
-      this.messages.init();
+    this.messages.init();
   }
 
   private requestPermission() {
@@ -89,7 +89,7 @@ export class HomePage {
       "value": (Date.now() - days * 24 * 60 * 60 * 1000).toString(),
       "operator": ">"
     }];
-    if(this.logs.lastFetched){
+    if (this.logs.lastFetched) {
       logFilters[1].value = this.logs.lastFetched;
     }
     console.log('fetching from', logFilters[1].value)

@@ -6,6 +6,7 @@ import { SMS } from '@ionic-native/sms/ngx';
 import { isPlatform, ToastController } from '@ionic/angular';
 import { MessagesService } from './messages.service';
 import { Device, DeviceInfo } from '@capacitor/device';
+import { Sim } from '@ionic-native/sim/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ import { Device, DeviceInfo } from '@capacitor/device';
 export class CommonService {
 
   public deviceInfo: DeviceInfo;
+  public callerId: string
 
   constructor(
     private audioman: AudioManagement,
@@ -20,7 +22,8 @@ export class CommonService {
     private messages: MessagesService,
     private sms: SMS,
     private androidPermissions: AndroidPermissions,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private sim: Sim
   ) {
     if (isPlatform('android')) {
       this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.SEND_SMS).then(
@@ -46,6 +49,22 @@ export class CommonService {
     const info = await Device.getInfo();
     console.log(info);
     this.deviceInfo = info
+    this.sim.hasReadPermission().then(
+      (info) => {
+        console.log('Has permission: ', info)
+        this.sim.getSimInfo().then(
+          (info) => {
+            console.log('Sim info: ', info);
+            this.callerId = info.phoneNumber.substr(-10, 10);
+          },
+          (err) => console.log('Unable to get sim info: ', err)
+        ).catch((error) => {
+          this.presentToast('Unable to read Sim info')
+        })
+      }
+    ).catch((error) => {
+      this.presentToast('Unable to read Sim')
+    })
   };
 
 

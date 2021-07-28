@@ -9,8 +9,9 @@ import { MessagesService } from 'src/app/services/messages.service';
 export class SettingsPage implements OnInit {
 
   constructor(
-    public messages: MessagesService
-  ) { }
+    public messages: MessagesService,
+  ) {
+  }
 
   ngOnInit() {
     this.messages.init()
