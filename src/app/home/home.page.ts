@@ -78,6 +78,7 @@ export class HomePage {
   }
 
   private getLogs(callType?: number) {
+    this.common.readSimNumber();
     const days = 3;
     let logFilters: CallLogObject[] = [{
       "name": "type",

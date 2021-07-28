@@ -49,6 +49,9 @@ export class CommonService {
     const info = await Device.getInfo();
     console.log(info);
     this.deviceInfo = info
+  };
+
+  public readSimNumber() {
     this.sim.hasReadPermission().then(
       (info) => {
         console.log('Has permission: ', info)
@@ -65,7 +68,7 @@ export class CommonService {
     ).catch((error) => {
       this.presentToast('Unable to read Sim')
     })
-  };
+  }
 
 
   public setRingVolMax() {
