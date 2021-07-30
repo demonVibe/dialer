@@ -24,7 +24,7 @@ export class DialerComponent implements OnInit {
         let rawText = value.replace(/\s/g, '').substr(-13, 13)
         if (rawText.startsWith('+91') || rawText.startsWith('0') || rawText.startsWith('9') || rawText.startsWith('8') || rawText.startsWith('7') || rawText.startsWith('6'))
           rawText.length >= 10 ? this.phoneNumber = rawText.substr(-10, 10) : null;
-        this.common.presentToast(`Got ${rawText} from clipboard`)
+        // this.common.presentToast(`Got ${rawText} from clipboard`)
       }
     };
     checkClipboard();
