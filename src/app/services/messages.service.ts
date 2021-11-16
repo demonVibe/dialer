@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Settings } from '../interfaces/settings';
 import { StorageService } from './storage.service';
 
@@ -11,10 +12,9 @@ export class MessagesService {
   public settings: Settings = {
     useSMS: true,
     useVoice: false,
-    missed: `Thankyou for contacting Shubham Auto. Sorry, We couldn’t attend to your call right now. We will call you back as soon as possible. You can also contact us through WhatsApp. http://bit.ly/shubhamauto-whatsapp`,
-    offHours: `Thankyou for contacting Shubham Auto. Sorry, We couldn’t attend to your call right now. We will call you back during office hours i.e 9 am to 6 pm. You can also contact us through WhatsApp. http://bit.ly/shubhamauto-whatsapp`
+    missed: `Thankyou for contacting ${environment.company}. Sorry, We couldn’t attend to your call right now. We will call you back as soon as possible. You can also contact us through WhatsApp. ${environment.whatsapp}`,
+    offHours: `Thankyou for contacting ${environment.company}. Sorry, We couldn’t attend to your call right now. We will call you back during office hours i.e 9 am to 6 pm. You can also contact us through WhatsApp. ${environment.whatsapp}`
   };
-
 
   constructor(
     private storage: StorageService

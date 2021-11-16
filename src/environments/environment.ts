@@ -5,21 +5,19 @@
 export const environment = {
   production: false,
   clickupBaseUrl: "https://api.clickup.com/api/v2",
-  clickupApiKey: "pk_5444370_5X1SD7Z42QLIGY6IMPEVM3JWX4371TT9",
-  list_id: "49221350",
-  clickiApi: "X4ouc5aQ6FQCNm6Z0Mno2IR-CV6gKU5VKXhLUQFVyYlUjo5UHjaMbdR0AZsWtGQo",
+  //shubham auto clickupApiKey: "pk_5444370_5X1SD7Z42QLIGY6IMPEVM3JWX4371TT9",
+  clickupApiKey: "pk_49276096_AGN8OSPMXSI9NDUYYGR4W6UBIAG5QMX8",
+  //shubham auto list_id: "49221350",
+  list_id: "157413074",
+  company:'Shivani Auto',
+  clickiApi: "zF8Tsny7lcTFB3drNwS2TOWHERNsg_fzHM4PSlqS053XWf9nk0yo9qVQgPw0rcMR",
+  //shubham clickiApi: "X4ouc5aQ6FQCNm6Z0Mno2IR-CV6gKU5VKXhLUQFVyYlUjo5UHjaMbdR0AZsWtGQo",
   clickiURL:"https://caller.clickiexpress.com/api_v2/voice-call",
-  // customFieldId: "65db9101-b893-4969-8566-74e4928eafa7",
-  // customFieldPhoneId: "8a24e8f4-b929-4db0-9a5c-faf474d3e124",
-  // customFieldCallType: {
-  //   enquiry: "fbaec7cd-aa6a-4a28-bb5c-abcdeabca62f",
-  //   numberplate: "2cfb2f88-9767-47e8-9394-14327c36b9d4",
-  //   registrationcard: "7d86a912-f121-42f8-a7d8-76d8e69c874f",
-  //   insurance: "4e67b2aa-c83b-4cc8-b708-509a33f3c9a1",
-  //   dues: "3a197684-880f-46ba-b4c7-d8e51d33e3a2",
-  //   workshop: "253baeae-6de4-4957-93f6-b088077d99cb"
-  // },
+  // whatsapp:"http://bit.ly/shubhamauto-whatsapp",
+  whatsapp:"http://bit.ly/shivaniauto-whatsapp",
   assigneeId:5444370,
+  callerId: "9722519722",
+  voiceFile:"",
   demoLogs: [
     {
       "date": new Date(1623863547399),
